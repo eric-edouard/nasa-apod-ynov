@@ -1,9 +1,8 @@
 
 
+const axios = require('axios').default;
 const express = require('express')
-
 const data = require("./data.json")
-
 const app = express()
 const port = process.env.PORT || 3000
 
@@ -34,15 +33,12 @@ app.get('/', (req, res) => {
   }
 
   console.log("will fetch to real api...")
-  fetch(`https://api.nasa.gov/planetary/apod?date=${date}&api_key=DEMO_KEY`)
+  axios.get(`https://api.nasa.gov/planetary/apod?date=${date}&api_key=DEMO_KEY`)
     .then(res => {
-      console.log("received", JSON.stringify(res))
-      return res.body
-    })
-    .then(body => {
-      console.log("body is", JSON.stringify(body))
-      data[date] = body
-      res.send(body)
+      console.log("data is", JSON.stringify(res.data))
+      data[date] = res.data
+      res.send(res.data)
+      return res.data
     })
     .catch(e => {
       console.log("got error ", e)
