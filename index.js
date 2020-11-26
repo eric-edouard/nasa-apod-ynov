@@ -33,7 +33,22 @@ app.get('/', (req, res) => {
     return
   }
 
-  res.sendStatus(404)
+  console.log("will fetch to real api...")
+  fetch(`https://api.nasa.gov/planetary/apod?date=${date}&api_key=DEMO_KEY`)
+    .then(res => {
+      console.log("received", JSON.stringify(res))
+      return res.body
+    })
+    .then(body => {
+      console.log("body is", JSON.stringify(body))
+      data[date] = body
+      res.send(body)
+    })
+    .catch(e => {
+      console.log("got error ", e)
+      res.sendStatus(404)
+    })
+  
 })
 
 app.listen(port, () => {
