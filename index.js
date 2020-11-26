@@ -45,9 +45,7 @@ app.get('/', (req, res) => {
       console.log("got error ", e)
       res.sendStatus(404)
     })
-  
-    res.sendStatus(404)
-})
+  })
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
