@@ -34,17 +34,19 @@ app.get('/', (req, res) => {
 
   console.log("will fetch to real api...")
   axios.get(`https://api.nasa.gov/planetary/apod?date=${date}&api_key=DEMO_KEY`)
-    .then(res => {
-      console.log("data is", JSON.stringify(res.data))
-      data[date] = res.data
-      res.send(res.data)
-      return res.data
+    .then(_res => {
+      const _data = _res.data
+      console.log("_data is", JSON.stringify(_data))
+      data[date] = _data
+      res.send(_data)
+      return _data
     })
     .catch(e => {
       console.log("got error ", e)
       res.sendStatus(404)
     })
   
+    res.sendStatus(404)
 })
 
 app.listen(port, () => {
